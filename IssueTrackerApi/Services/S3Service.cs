@@ -1,5 +1,6 @@
 using Amazon;
 using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using IssueTrackerApi.Services.Interfaces;
 
@@ -17,6 +18,19 @@ public class S3Service : IS3Service
         var region = RegionEndpoint.GetBySystemName(config["Aws:Region"]!);
         _s3 = new AmazonS3Client(region);
         _logger = logger;
+    }
+
+    public string GetPresignedUrl(string key, int expiryMinutes = 60)
+    {
+        var request = new GetPreSignedUrlRequest
+        {
+            BucketName = _bucketName,
+            Key = key,
+            Expires = DateTime.UtcNow.AddMinutes(expiryMinutes),
+            Protocol = Protocol.HTTPS,
+            Verb = HttpVerb.GET,
+        };
+        return _s3.GetPreSignedURL(request);
     }
 
     public async Task<string> UploadOriginalAsync(IFormFile file, Guid issueId)

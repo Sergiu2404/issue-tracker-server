@@ -108,7 +108,7 @@ public class Function
             catch (Exception ex)
             {
                 context.Logger.LogError($"Error processing {key}: {ex.Message}");
-                throw; // Let Lambda retry
+                throw;
             }
         }
     }

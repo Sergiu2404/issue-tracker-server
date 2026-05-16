@@ -87,7 +87,7 @@ public class IssueService : IIssueService
         return true;
     }
 
-    private static IssueResponseDto ToDto(IssueReport i) => new()
+    private IssueResponseDto ToDto(IssueReport i) => new()
     {
         Id = i.Id,
         UserId = i.UserId,
@@ -96,8 +96,10 @@ public class IssueService : IIssueService
         Description = i.Description,
         Location = i.Location,
         Status = i.Status.ToString(),
-        ThumbnailUrl = i.ThumbnailUrl,
-        OriginalImageUrl = i.OriginalImageUrl,
+        //ThumbnailUrl = i.ThumbnailUrl,
+        //OriginalImageUrl = i.OriginalImageUrl,
+        ThumbnailUrl = _s3.GetPresignedUrl($"thumbnails/{i.Id}.jpg"),
+        OriginalImageUrl = _s3.GetPresignedUrl($"original/{i.Id}.jpg"),
         CreatedAt = i.CreatedAt,
     };
 }
