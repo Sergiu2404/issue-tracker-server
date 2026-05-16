@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="IssueTrackerApi/IssueTrackerApi.csproj" Id="10026b94-40af-401e-a780-b7adba5ab4f3" />
+  <Project Path="IssueTrackerLambda/IssueTrackerLambda.csproj" />
+</Solution>
